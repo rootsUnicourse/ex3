@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar"; // or another icon for the wheel
-import PeopleIcon from "@mui/icons-material/People"; // or Groups, Person, etc.
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import PeopleIcon from "@mui/icons-material/People";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +37,6 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        fontFamily: "'Plus Jakarta Sans', sans-serif",
         padding: 2,
       }}
     >
@@ -56,10 +56,11 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
             variant="h6"
             sx={{
               fontWeight: 700,
-              fontSize: "16px",
+              fontSize: "20px",
               color: "#1A202C",
               lineHeight: 1.2,
               marginBottom: "4px",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
             {car.name}
@@ -68,9 +69,10 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
           <Typography
             variant="body2"
             sx={{
-              fontWeight: 400,
+              fontWeight: 700,
               fontSize: "14px",
               color: "#90A3BF",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
             {car.type}
@@ -87,12 +89,11 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
             padding: 0,
           }}
         >
-          <FavoriteIcon
-            sx={{
-              color: isFavorite ? "#FF4D67" : "#90A3BF",
-              fontSize: "20px",
-            }}
-          />
+          {isFavorite ? (
+            <FavoriteIcon sx={{ color: "#FF4D67", fontSize: "24px" }} />
+          ) : (
+            <FavoriteBorderIcon sx={{ color: "#90A3BF", fontSize: "24px" }} />
+          )}
         </IconButton>
       </Box>
 
@@ -108,7 +109,7 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
           height: "140px",
           borderRadius: "8px",
           objectFit: "cover",
-          marginBottom: 2,
+          marginTop: 5,
         }}
       />
 
@@ -118,15 +119,15 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: 2,
+          marginTop: 5,
         }}
       >
         {/* Gas */}
         <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-          <LocalGasStationIcon sx={{ color: "#90A3BF", fontSize: 18 }} />
+          <LocalGasStationIcon sx={{ color: "#90A3BF", fontSize: 24 }} />
           <Typography
             variant="body2"
-            sx={{ fontWeight: 600, fontSize: "14px", color: "#242731" }}
+            sx={{ fontWeight: 500, fontSize: "14px", color: "#90A3BF", fontFamily: "'Plus Jakarta Sans', sans-serif", }}
           >
             {car.fuel}
           </Typography>
@@ -134,10 +135,10 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
 
         {/* Transmission */}
         <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-          <DirectionsCarIcon sx={{ color: "#90A3BF", fontSize: 18 }} />
+          <DirectionsCarIcon sx={{ color: "#90A3BF", fontSize: 24 }} />
           <Typography
             variant="body2"
-            sx={{ fontWeight: 600, fontSize: "14px", color: "#242731" }}
+            sx={{ fontWeight: 500, fontSize: "14px", color: "#90A3BF", fontFamily: "'Plus Jakarta Sans', sans-serif", }}
           >
             {car.transmission}
           </Typography>
@@ -145,10 +146,10 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
 
         {/* People */}
         <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-          <PeopleIcon sx={{ color: "#90A3BF", fontSize: 18 }} />
+          <PeopleIcon sx={{ color: "#90A3BF", fontSize: 24 }} />
           <Typography
             variant="body2"
-            sx={{ fontWeight: 600, fontSize: "14px", color: "#242731" }}
+            sx={{ fontWeight: 500, fontSize: "14px", color: "#90A3BF", fontFamily: "'Plus Jakarta Sans', sans-serif", }}
           >
             {car.capacity} People
           </Typography>
@@ -167,26 +168,26 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
         {/* Price + day */}
         <Box sx={{ display: "flex", alignItems: "baseline" }}>
           <Typography
-            variant="body1"
             sx={{
               fontWeight: 700,
-              fontSize: "18px",
+              fontSize: "20px",
               color: "#1A202C",
               lineHeight: 1,
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
-            ${car.dailyPrice.toFixed(2)}
+            ${car.dailyPrice.toFixed(2)}/
           </Typography>
           <Typography
-            component="span"
             sx={{
               marginLeft: "4px",
               color: "#90A3BF",
-              fontWeight: 400,
+              fontWeight: 700,
               fontSize: "14px",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
-            /day
+            day
           </Typography>
         </Box>
 
@@ -195,11 +196,12 @@ export default function CarCard({ car, isFavorite, onToggleFavorite }) {
           variant="contained"
           sx={{
             backgroundColor: "#3563E9",
-            borderRadius: "8px",
+            borderRadius: "4px",
             textTransform: "none",
-            fontSize: "14px",
-            fontWeight: 700,
-            paddingX: 2,
+            fontSize: "16px",
+            fontWeight: 600,
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            paddingX: 3,
             paddingY: 1,
             "&:hover": {
               backgroundColor: "#2F4ACC",
