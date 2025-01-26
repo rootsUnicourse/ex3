@@ -12,13 +12,13 @@ function App() {
     <Router>
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <Navbar />
-        <div style={{ flex: 1 }}>
+        {/* <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/car/:id" element={<CarDetail />} />
           </Routes>
         </div>
-        <Footer />
+        <Footer /> */}
       </div>
     </Router>
   );
