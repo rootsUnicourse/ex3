@@ -1,8 +1,22 @@
-// src/components/FilterBar.jsx
 import React from "react";
-import { Box, FormControlLabel, Checkbox, Slider, Typography } from "@mui/material";
+import {
+  Box,
+  FormControlLabel,
+  Checkbox,
+  Slider,
+  Typography,
+  Divider,
+} from "@mui/material";
+
+// Helper functions to count cars
+const getTypeCount = (cars, type) =>
+  cars.filter((car) => car.type === type).length;
+
+const getCapacityCount = (cars, capacity) =>
+  cars.filter((car) => car.capacity === capacity).length;
 
 export default function FilterBar({
+  cars = [],
   allCarTypes,
   selectedTypes,
   setSelectedTypes,
@@ -14,31 +28,22 @@ export default function FilterBar({
   minPrice,
   maxPrice,
 }) {
-  // Handle Car Type check toggles
+  // Toggle logic for Car Type
   const handleTypeChange = (type) => {
-    // if type is in selectedTypes, remove it, otherwise add it
-    let updated = [];
-    if (selectedTypes.includes(type)) {
-      if (selectedTypes.length === 1) {
-        // We can't remove the last type, so do nothing or show an alert
-        return;
-      }
-      updated = selectedTypes.filter((t) => t !== type);
-    } else {
-      updated = [...selectedTypes, type];
-    }
+    let updated = selectedTypes.includes(type)
+      ? selectedTypes.filter((t) => t !== type)
+      : [...selectedTypes, type];
+    // Prevent unchecking the last item
+    if (updated.length === 0) return;
     setSelectedTypes(updated);
   };
 
-  // Handle capacity check toggles
+  // Toggle logic for Capacity
   const handleCapacityChange = (cap) => {
-    // if cap is in selectedCapacities, remove it, else add it
-    let updated = [];
-    if (selectedCapacities.includes(cap)) {
-      updated = selectedCapacities.filter((c) => c !== cap);
-    } else {
-      updated = [...selectedCapacities, cap];
-    }
+    let updated = selectedCapacities.includes(cap)
+      ? selectedCapacities.filter((c) => c !== cap)
+      : [...selectedCapacities, cap];
+    if (updated.length === 0) return;
     setSelectedCapacities(updated);
   };
 
@@ -48,25 +53,78 @@ export default function FilterBar({
   };
 
   return (
-    <Box sx={{ width: 250, padding: 2, borderRight: "1px solid #ccc" }}>
-      {/* Car Type Filter */}
-      <Typography variant="h6">Car Type</Typography>
-      {allCarTypes.map((type) => (
-        <FormControlLabel
-          key={type}
-          control={
-            <Checkbox
-              checked={selectedTypes.includes(type)}
-              onChange={() => handleTypeChange(type)}
-            />
-          }
-          label={type}
-        />
-      ))}
+    <Box
+      sx={{
+        // Force the FilterBar to remain exactly 320px wide.
+        // Even if text grows, it won't expand the container.
+        width: 200,
+        minWidth: 200,
+        maxWidth: 200,
 
-      <Box sx={{ marginTop: 2 }}>
-        {/* Capacity Filter */}
-        <Typography variant="h6">Capacity</Typography>
+        padding: "24px",
+        backgroundColor: "#F8F9FA",
+        borderRadius: "12px",
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+        // Optional: prevent overflow in case text is longer than 320px
+        overflow: "hidden",
+      }}
+    >
+      {/* Car Type Filter */}
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 700,
+          fontSize: "18px",
+          color: "#1A202C",
+          marginBottom: "12px",
+        }}
+      >
+        Car Type
+      </Typography>
+
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        {allCarTypes.map((type) => (
+          <FormControlLabel
+            key={type}
+            control={
+              <Checkbox
+                checked={selectedTypes.includes(type)}
+                onChange={() => handleTypeChange(type)}
+                sx={{
+                  color: "#90A3BF",
+                  "&.Mui-checked": {
+                    color: "#3563E9",
+                  },
+                }}
+              />
+            }
+            label={
+              <Typography sx={{ fontSize: "16px", fontWeight: 500, color: "#596780" }}>
+                {type} ({getTypeCount(cars, type)})
+              </Typography>
+            }
+            sx={{ marginBottom: "8px" }}
+          />
+        ))}
+      </Box>
+
+      <Divider sx={{ marginY: "16px" }} />
+
+      {/* Capacity Filter */}
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 700,
+          fontSize: "18px",
+          color: "#1A202C",
+          marginBottom: "12px",
+        }}
+      >
+        Capacity
+      </Typography>
+
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
         {capacities.map((cap) => (
           <FormControlLabel
             key={cap}
@@ -74,25 +132,79 @@ export default function FilterBar({
               <Checkbox
                 checked={selectedCapacities.includes(cap)}
                 onChange={() => handleCapacityChange(cap)}
+                sx={{
+                  color: "#90A3BF",
+                  "&.Mui-checked": {
+                    color: "#3563E9",
+                  },
+                }}
               />
             }
-            label={`${cap} seats`}
+            label={
+              <Typography sx={{ fontSize: "16px", fontWeight: 500, color: "#596780" }}>
+                {cap} Seats ({getCapacityCount(cars, cap)})
+              </Typography>
+            }
+            sx={{ marginBottom: "8px" }}
           />
         ))}
       </Box>
 
-      <Box sx={{ marginTop: 2 }}>
-        {/* Price Range Slider */}
-        <Typography variant="h6">Daily Price</Typography>
-        <Slider
-          value={priceRange}
-          onChange={handlePriceChange}
-          valueLabelDisplay="auto"
-          min={minPrice}
-          max={maxPrice}
-        />
-        <Typography>
-          {`$${priceRange[0]} - $${priceRange[1]}`}
+      <Divider sx={{ marginY: "16px" }} />
+
+      {/* Price Range Slider */}
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 700,
+          fontSize: "18px",
+          color: "#1A202C",
+          marginBottom: "12px",
+        }}
+      >
+        Daily Price
+      </Typography>
+      <Slider
+        value={priceRange}
+        onChange={handlePriceChange}
+        valueLabelDisplay="off"
+        min={minPrice}
+        max={maxPrice}
+        sx={{
+          color: "#3563E9",
+          "& .MuiSlider-thumb": {
+            backgroundColor: "#3563E9",
+          },
+          "& .MuiSlider-track": {
+            backgroundColor: "#3563E9",
+          },
+          "& .MuiSlider-rail": {
+            backgroundColor: "#DDE3EC",
+          },
+        }}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "8px",
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: "16px",
+            fontWeight: 500,
+            color: "#596780",
+            textAlign: "center",
+            minHeight: "24px",
+            minWidth: 100,   // Enough for the largest text
+            maxWidth: 120,   // Prevents overgrowth if numbers are huge
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
+          ${priceRange[0]} - ${priceRange[1]}
         </Typography>
       </Box>
     </Box>
