@@ -1,0 +1,75 @@
+[
+    {
+      "id": 1,
+      "name": "Toyota Yaris",
+      "type": "Sedan",
+      "capacity": 4,
+      "dailyPrice": 40,
+      "images": [
+        "/images/yaris1.jpg",
+        "/images/yaris2.jpg",
+        "/images/yaris3.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Ford Mustang",
+      "type": "Sports",
+      "capacity": 2,
+      "dailyPrice": 120,
+      "images": [
+        "/images/mustang1.jpg",
+        "/images/mustang2.jpg",
+        "/images/mustang3.jpg"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Hyundai i10",
+      "type": "Mini",
+      "capacity": 4,
+      "dailyPrice": 35,
+      "images": [
+        "/images/i101.jpg",
+        "/images/i102.jpg",
+        "/images/i103.jpg"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "BMW X5",
+      "type": "SUV",
+      "capacity": 5,
+      "dailyPrice": 150,
+      "images": [
+        "/images/x51.jpg",
+        "/images/x52.jpg",
+        "/images/x53.jpg"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Mercedes Sprinter",
+      "type": "Van",
+      "capacity": 9,
+      "dailyPrice": 180,
+      "images": [
+        "/images/sprinter1.jpg",
+        "/images/sprinter2.jpg",
+        "/images/sprinter3.jpg"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Mazda 3",
+      "type": "Sedan",
+      "capacity": 5,
+      "dailyPrice": 50,
+      "images": [
+        "/images/mazda1.jpg",
+        "/images/mazda2.jpg",
+        "/images/mazda3.jpg"
+      ]
+    }
+  ]
+  
