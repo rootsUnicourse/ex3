@@ -103,8 +103,8 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
                 <Typography
                   variant="h5"
                   sx={{
-                    fontWeight: 700,
-                    fontSize: 24,
+                    fontWeight: 600,
+                    fontSize: 32,
                     color: "#FFFFFF",
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
                     marginBottom: 1,
