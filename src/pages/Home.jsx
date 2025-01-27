@@ -9,7 +9,7 @@ import CarGrid from "../components/CarGrid";
 import CarDetail from "./CarDetail"; // Import your detail component
 
 export default function Home({ searchValue, isFavorites }) {
-  const [cars, setCars] = useState([]); 
+  const [cars, setCars] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
   // Filter states
@@ -33,9 +33,18 @@ export default function Home({ searchValue, isFavorites }) {
       const maxP = Math.max(...carsData.map((c) => c.dailyPrice));
       setPriceRange([minP, maxP]);
     }
+    // Load favorites from local storage
+    const storedFavorites = localStorage.getItem("favorites");
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites)); // parse string to array
+    }
   }, []);
 
-  // Toggle favorites for specific car
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
+
   const handleToggleFavorite = (carId) => {
     setFavorites((prev) =>
       prev.includes(carId) ? prev.filter((id) => id !== carId) : [...prev, carId]
@@ -108,7 +117,7 @@ export default function Home({ searchValue, isFavorites }) {
           {/* If user visits "/car/:id", show CarDetail */}
           <Route
             path="car/:id"
-            element={<CarDetail />}
+            element={<CarDetail favorites={favorites} onToggleFavorite={handleToggleFavorite} />}
           />
         </Routes>
       </Box>

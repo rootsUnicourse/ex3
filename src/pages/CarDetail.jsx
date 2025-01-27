@@ -13,15 +13,18 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
 import carsData from "../data/cars.json";
 
-export default function CarDetail() {
+export default function CarDetail({ favorites, onToggleFavorite }) {
   const { id } = useParams();
   const [car, setCar] = useState(null);
 
-  // Local favorites just for demo (in a real app, you'd use context or props)
-  const [favorites, setFavorites] = useState([]);
-
   // Which image is currently displayed in the "big" image slot
   const [selectedImage, setSelectedImage] = useState("");
+  const isFavorite = car && favorites.includes(car.id);
+
+  const handleToggleFavorite = () => {
+    if (!car) return;
+    onToggleFavorite(car.id); // call parent's toggler
+  };
 
   useEffect(() => {
     const foundCar = carsData.find((c) => c.id === parseInt(id));
@@ -31,14 +34,6 @@ export default function CarDetail() {
     }
   }, [id]);
 
-  const isFavorite = car && favorites.includes(car.id);
-
-  const handleToggleFavorite = () => {
-    if (!car) return;
-    setFavorites((prev) =>
-      isFavorite ? prev.filter((carId) => carId !== car.id) : [...prev, car.id]
-    );
-  };
 
   const handleThumbnailClick = (img) => {
     setSelectedImage(img);
