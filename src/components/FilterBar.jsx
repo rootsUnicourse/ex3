@@ -60,7 +60,6 @@ export default function FilterBar({
         width: 200,
         minWidth: 200,
         maxWidth: 200,
-
         padding: "24px",
         backgroundColor: "#FFFFFF",
         borderRadius: "12px",
