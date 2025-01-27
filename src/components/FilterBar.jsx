@@ -62,7 +62,7 @@ export default function FilterBar({
         maxWidth: 200,
 
         padding: "24px",
-        backgroundColor: "#F8F9FA",
+        backgroundColor: "#FFFFFF",
         borderRadius: "12px",
         fontFamily: "'Plus Jakarta Sans', sans-serif",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",

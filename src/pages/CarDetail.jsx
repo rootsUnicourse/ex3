@@ -6,7 +6,8 @@ import {
   IconButton,
   Button,
   CardMedia,
-  Grid
+  Grid,
+  Card
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
@@ -23,27 +24,22 @@ export default function CarDetail() {
   const [selectedImage, setSelectedImage] = useState("");
 
   useEffect(() => {
-    // Find the car by the ID in the URL
     const foundCar = carsData.find((c) => c.id === parseInt(id));
     if (foundCar) {
       setCar(foundCar);
-      setSelectedImage(foundCar.images[0]); // Show the 1st image by default
+      setSelectedImage(foundCar.images[0]);
     }
   }, [id]);
 
-  // Check if this car is in favorites
   const isFavorite = car && favorites.includes(car.id);
 
   const handleToggleFavorite = () => {
     if (!car) return;
-    if (isFavorite) {
-      setFavorites((prev) => prev.filter((carId) => carId !== car.id));
-    } else {
-      setFavorites((prev) => [...prev, car.id]);
-    }
+    setFavorites((prev) =>
+      isFavorite ? prev.filter((carId) => carId !== car.id) : [...prev, car.id]
+    );
   };
 
-  // Switch the big image when a thumbnail is clicked
   const handleThumbnailClick = (img) => {
     setSelectedImage(img);
   };
@@ -61,7 +57,6 @@ export default function CarDetail() {
       sx={{
         paddingX: { xs: 2, md: 6 },
         paddingY: 4,
-        fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
     >
       {/* Title */}
@@ -69,19 +64,28 @@ export default function CarDetail() {
         variant="h4"
         sx={{
           fontWeight: 700,
-          fontSize: 24,
+          fontSize: 20,
           color: "#1A202C",
-          marginBottom: 3
+          marginBottom: 3,
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}
       >
         Car Details
       </Typography>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={4} alignItems="stretch">
         {/* LEFT COLUMN: Big image + thumbnails */}
-        <Grid item xs={12} md={6}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           {/* Big Image */}
-          <Box
+          <Card
             sx={{
               width: "100%",
               height: 300,
@@ -97,247 +101,301 @@ export default function CarDetail() {
               sx={{
                 width: "100%",
                 height: "100%",
-                objectFit: "cover",
-                cursor: "pointer"
+                objectFit: "contain",
+                cursor: "pointer",
               }}
             />
-          </Box>
+          </Card>
 
           {/* Thumbnails */}
-          <Box sx={{ display: "flex", gap: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              height: 100,
+            }}
+          >
             {car.images.map((img) => (
               <Box
                 key={img}
-                component="img"
-                src={img}
-                alt="Thumbnail"
-                onClick={() => handleThumbnailClick(img)}
                 sx={{
-                  width: 80,
-                  height: 60,
-                  objectFit: "cover",
+                  flex: 1,
                   borderRadius: 2,
-                  border:
-                    selectedImage === img
-                      ? "2px solid #3563E9"
-                      : "1px solid #ccc",
+                  border: selectedImage === img ? "2px solid #3563E9" : "1px solid #ccc",
                   cursor: "pointer",
+                  overflow: "hidden",
+                  aspectRatio: "1/1",
                 }}
-              />
+              >
+                <CardMedia
+                  component="img"
+                  src={img}
+                  alt="Thumbnail"
+                  onClick={() => handleThumbnailClick(img)}
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
             ))}
           </Box>
         </Grid>
 
-        {/* RIGHT COLUMN: Car info, rating, description, specs, and rent button */}
-        <Grid item xs={12} md={6}>
-          {/* Car Name + Favorite Icon */}
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: 700,
-                fontSize: 20,
-                color: "#1A202C",
-              }}
-            >
-              {car.name}
-            </Typography>
-            <IconButton
-              onClick={handleToggleFavorite}
-              sx={{ padding: 0, marginLeft: 2 }}
-            >
-              <FavoriteIcon
-                sx={{
-                  color: isFavorite ? "#FF4D67" : "#90A3BF",
-                  fontSize: 24
-                }}
-              />
-            </IconButton>
-          </Box>
-
-          {/* Star Rating + Review Count */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, marginTop: 1 }}>
-            {/* 5 stars (or partial) based on car.rating */}
-            {Array.from({ length: 5 }, (_, index) => {
-              const starValue = index + 1; // 1 to 5
-              return (
-                <StarIcon
-                  key={starValue}
-                  sx={{
-                    color: starValue <= car.rating ? "#FCD444" : "#E0E0E0",
-                    fontSize: 20
-                  }}
-                />
-              );
-            })}
-            <Typography
-              sx={{
-                fontWeight: 500,
-                fontSize: 14,
-                color: "#596780",
-                marginLeft: 1
-              }}
-            >
-              {car.reviews} Reviewers
-            </Typography>
-          </Box>
-
-          {/* Description */}
-          <Typography
+        {/* RIGHT COLUMN: Card with car details */}
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{ display: "flex" }}
+        >
+          <Card
             sx={{
-              fontWeight: 400,
-              fontSize: 14,
-              color: "#1A202C",
-              marginTop: 2,
-              lineHeight: 1.6
-            }}
-          >
-            {car.description}
-          </Typography>
-
-          {/* Specs: Row 1 (Type & Capacity) */}
-          <Box
-            sx={{
+              flex: 1,
+              borderRadius: 2,
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
               display: "flex",
-              justifyContent: "space-between",
-              marginTop: 3
+              flexDirection: "column",
+              padding: 3,
             }}
           >
-            <Box>
+            {/* Car Name + Favorite Icon */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+              }}
+            >
               <Typography
+                variant="h5"
                 sx={{
-                  color: "#90A3BF",
-                  fontSize: 14,
-                  fontWeight: 400,
-                  marginBottom: "4px"
+                  fontWeight: 700,
+                  fontSize: 32,
+                  color: "#1A202C",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
-                Type
+                {car.name}
+              </Typography>
+              <IconButton
+                onClick={handleToggleFavorite}
+                sx={{ padding: 0, marginLeft: 2 }}
+              >
+                <FavoriteIcon
+                  sx={{
+                    color: isFavorite ? "#FF4D67" : "#90A3BF",
+                    fontSize: 24,
+                  }}
+                />
+              </IconButton>
+            </Box>
+
+            {/* Star Rating + Review Count */}
+            <Box sx={{ display: "flex", alignItems: "center", marginTop: 1 }}>
+              {Array.from({ length: 5 }, (_, index) => {
+                const starValue = index + 1;
+                return (
+                  <StarIcon
+                    key={starValue}
+                    sx={{
+                      color: starValue <= car.rating ? "#FBAD39" : "#E0E0E0",
+                      fontSize: 20,
+                    }}
+                  />
+                );
+              })}
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: 14,
+                  color: "#596780",
+                  marginLeft: 1,
+                }}
+              >
+                {car.reviews} Reviewers
+              </Typography>
+            </Box>
+
+            {/* Description */}
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: 20,
+                color: "#596780",
+                marginTop: 2,
+                lineHeight: 1.6,
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+              }}
+            >
+              {car.description}
+            </Typography>
+
+            {/* Row 1: (Type label, Type value, Capacity label, Capacity value) */}
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                marginTop: 3,
+              }}
+            >
+              <Typography
+                sx={{
+                  width: "25%",
+                  fontWeight: 400,
+                  fontSize: 20,
+                  color: "#90A3BF",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                }}
+              >
+                Type Car:
               </Typography>
               <Typography
                 sx={{
-                  color: "#1A202C",
+                  width: "25%",
                   fontWeight: 600,
-                  fontSize: 16
+                  fontSize: 20,
+                  color: "#596780",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
                 {car.type}
               </Typography>
-            </Box>
 
-            <Box>
               <Typography
                 sx={{
-                  color: "#90A3BF",
-                  fontSize: 14,
+                  width: "25%",
                   fontWeight: 400,
-                  marginBottom: "4px"
+                  fontSize: 20,
+                  color: "#90A3BF",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
-                Capacity
+                Capacity:
               </Typography>
               <Typography
                 sx={{
-                  color: "#1A202C",
+                  width: "25%",
                   fontWeight: 600,
-                  fontSize: 16
+                  fontSize: 20,
+                  color: "#596780",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
                 {car.capacity} People
               </Typography>
             </Box>
-          </Box>
 
-          {/* Specs: Row 2 (Transmission & Fuel) */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: 3
-            }}
-          >
-            <Box>
+            {/* Row 2: (Steering label, Steering value, Gasoline label, Gasoline value) */}
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                marginTop: 2,
+              }}
+            >
               <Typography
                 sx={{
-                  color: "#90A3BF",
-                  fontSize: 14,
+                  width: "25%",
                   fontWeight: 400,
-                  marginBottom: "4px"
+                  fontSize: 20,
+                  color: "#90A3BF",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
-                Steering
+                Steering:
               </Typography>
               <Typography
                 sx={{
-                  color: "#1A202C",
+                  width: "25%",
                   fontWeight: 600,
-                  fontSize: 16
+                  fontSize: 20,
+                  color: "#596780",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
                 {car.transmission}
               </Typography>
-            </Box>
 
-            <Box>
               <Typography
                 sx={{
-                  color: "#90A3BF",
-                  fontSize: 14,
+                  width: "25%",
                   fontWeight: 400,
-                  marginBottom: "4px"
+                  fontSize: 20,
+                  color: "#90A3BF",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
-                Gasoline
+                Gasoline:
               </Typography>
               <Typography
                 sx={{
-                  color: "#1A202C",
+                  width: "25%",
                   fontWeight: 600,
-                  fontSize: 16
+                  fontSize: 20,
+                  color: "#596780",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}
               >
                 {car.fuel}
               </Typography>
             </Box>
-          </Box>
 
-          {/* Bottom Row: Price + Rent Button */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: 4,
-            }}
-          >
-            <Typography
+            {/* Bottom Row: Price + Rent Button */}
+            <Box
               sx={{
-                fontWeight: 700,
-                fontSize: 20,
-                color: "#1A202C"
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginTop: "auto",
               }}
             >
-              ${car.dailyPrice}/day
-            </Typography>
+              {/* Price + day */}
+              <Box sx={{ display: "flex", alignItems: "baseline" }}>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "32px",
+                    color: "#1A202C",
+                    lineHeight: 1,
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  }}
+                >
+                  ${car.dailyPrice.toFixed(2)}/
+                </Typography>
+                <Typography
+                  sx={{
+                    marginLeft: "4px",
+                    color: "#90A3BF",
+                    fontWeight: 700,
+                    fontSize: "28px",
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  }}
+                >
+                  day
+                </Typography>
+              </Box>
 
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#3563E9",
-                borderRadius: 2,
-                textTransform: "none",
-                fontSize: 16,
-                fontWeight: 700,
-                paddingX: 3,
-                paddingY: 1.2,
-                "&:hover": {
-                  backgroundColor: "#2F4ACC",
-                },
-              }}
-            >
-              Rent Now
-            </Button>
-          </Box>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#3563E9",
+                  borderRadius: 2,
+                  textTransform: "none",
+                  fontSize: 16,
+                  fontWeight: 700,
+                  paddingX: 5,
+                  paddingY: 2,
+                  "&:hover": {
+                    backgroundColor: "#2F4ACC",
+                  },
+                }}
+              >
+                Rent Now
+              </Button>
+            </Box>
+          </Card>
         </Grid>
       </Grid>
     </Box>
