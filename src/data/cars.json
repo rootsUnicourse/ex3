@@ -7,6 +7,9 @@
     "dailyPrice": 40,
     "fuel": "90L",
     "transmission": "Manual",
+    "rating": 5,
+    "reviews": 440,
+    "description": "A reliable, compact sedan that is perfect for city driving and short trips.",
     "images": [
       "/images/yaris1.jpg",
       "/images/yaris2.jpg",
@@ -21,6 +24,9 @@
     "dailyPrice": 120,
     "fuel": "90L",
     "transmission": "Manual",
+    "rating": 5,
+    "reviews": 1200,
+    "description": "An iconic American muscle car offering thrilling performance and head-turning style.",
     "images": [
       "/images/mustang1.jpg",
       "/images/mustang2.jpg",
@@ -35,6 +41,9 @@
     "dailyPrice": 35,
     "fuel": "90L",
     "transmission": "Manual",
+    "rating": 4,
+    "reviews": 350,
+    "description": "A small, efficient hatchback that is budget-friendly and easy to maneuver in urban areas.",
     "images": [
       "/images/i101.jpg",
       "/images/i102.jpg",
@@ -49,6 +58,9 @@
     "dailyPrice": 150,
     "fuel": "90L",
     "transmission": "Manual",
+    "rating": 5,
+    "reviews": 920,
+    "description": "A luxurious, high-performance SUV that combines comfort, power, and advanced technology.",
     "images": [
       "/images/x51.jpg",
       "/images/x52.jpg",
@@ -63,6 +75,9 @@
     "dailyPrice": 180,
     "fuel": "90L",
     "transmission": "Manual",
+    "rating": 4,
+    "reviews": 210,
+    "description": "A spacious and versatile van suitable for large groups or transporting bulky cargo.",
     "images": [
       "/images/sprinter1.jpg",
       "/images/sprinter2.jpg",
@@ -77,6 +92,9 @@
     "dailyPrice": 50,
     "fuel": "90L",
     "transmission": "Manual",
+    "rating": 4,
+    "reviews": 570,
+    "description": "A stylish sedan offering a smooth ride, responsive handling, and great fuel efficiency.",
     "images": [
       "/images/mazda1.jpg",
       "/images/mazda2.jpg",
