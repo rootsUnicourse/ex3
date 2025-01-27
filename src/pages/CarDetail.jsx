@@ -30,10 +30,9 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
     const foundCar = carsData.find((c) => c.id === parseInt(id));
     if (foundCar) {
       setCar(foundCar);
-      setSelectedImage(foundCar.images[0]);
+      setSelectedImage(foundCar.images[0]); // Default to first image
     }
   }, [id]);
-
 
   const handleThumbnailClick = (img) => {
     setSelectedImage(img);
@@ -47,13 +46,14 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
     );
   }
 
+  // Determine if we're showing the first image or not
+  const isFirstImage = selectedImage === car.images[0];
+
+  // objectFit: "contain" if it's the first image, otherwise "cover"
+  const bigImageFit = isFirstImage ? "contain" : "cover";
+
   return (
-    <Box
-      sx={{
-        paddingX: { xs: 2, md: 6 },
-        paddingY: 4,
-      }}
-    >
+    <Box sx={{ paddingX: { xs: 2, md: 6 }, paddingY: 4 }}>
       {/* Title */}
       <Typography
         variant="h4"
@@ -79,38 +79,81 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
             flexDirection: "column",
           }}
         >
-          {/* Big Image */}
+          {/* Big Card */}
           <Card
             sx={{
               width: "100%",
-              height: 300,
               borderRadius: 2,
               overflow: "hidden",
               marginBottom: 2,
+              height: 350, // Fixed total height for ALL images
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: isFirstImage ? "#3563E9" : "#FFFFFF",
             }}
           >
-            <CardMedia
-              component="img"
-              src={selectedImage}
-              alt={car.name}
+            {/* (1) Optional Top Box (Title + Subtitle) for the first image */}
+            {isFirstImage && (
+              <Box
+                sx={{
+                  padding: 2,
+                  flex: "0 0 auto", // so it doesn't stretch
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: 24,
+                    color: "#FFFFFF",
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    marginBottom: 1,
+                  }}
+                >
+                  {car.title}
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: 500,
+                    fontSize: 16,
+                    color: "#FFFFFF",
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  }}
+                >
+                  {car.subTitle}
+                </Typography>
+              </Box>
+            )}
+
+            {/* (2) Image area - takes remaining space */}
+            <Box
               sx={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
-                cursor: "pointer",
+                flex: 1,            // fill all remaining height
+                position: "relative",
               }}
-            />
+            >
+              <CardMedia
+                component="img"
+                src={selectedImage}
+                alt={car.name}
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: bigImageFit, // "contain" if first image, else "cover"
+                  cursor: "pointer",
+                }}
+              />
+            </Box>
           </Card>
 
           {/* Thumbnails */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              height: 100,
-            }}
-          >
-            {car.images.map((img) => (
+          <Box sx={{ display: "flex", gap: 2, height: 100 }}>
+            {car.images.map((img, index) => (
               <Box
                 key={img}
                 sx={{
@@ -120,6 +163,7 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
                   cursor: "pointer",
                   overflow: "hidden",
                   aspectRatio: "1/1",
+                  backgroundColor: index === 0 ? "#3563E9" : "transparent",
                 }}
               >
                 <CardMedia
@@ -138,13 +182,8 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
           </Box>
         </Grid>
 
-        {/* RIGHT COLUMN: Card with car details */}
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{ display: "flex" }}
-        >
+        {/* RIGHT COLUMN: Car Details */}
+        <Grid item xs={12} md={6} sx={{ display: "flex" }}>
           <Card
             sx={{
               flex: 1,
@@ -174,10 +213,7 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
               >
                 {car.name}
               </Typography>
-              <IconButton
-                onClick={handleToggleFavorite}
-                sx={{ padding: 0, marginLeft: 2 }}
-              >
+              <IconButton onClick={handleToggleFavorite} sx={{ padding: 0, marginLeft: 2 }}>
                 <FavoriteIcon
                   sx={{
                     color: isFavorite ? "#FF4D67" : "#90A3BF",
@@ -228,13 +264,7 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
             </Typography>
 
             {/* Row 1: (Type label, Type value, Capacity label, Capacity value) */}
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                marginTop: 3,
-              }}
-            >
+            <Box sx={{ display: "flex", flexWrap: "wrap", marginTop: 3 }}>
               <Typography
                 sx={{
                   width: "25%",
@@ -283,13 +313,7 @@ export default function CarDetail({ favorites, onToggleFavorite }) {
             </Box>
 
             {/* Row 2: (Steering label, Steering value, Gasoline label, Gasoline value) */}
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                marginTop: 2,
-              }}
-            >
+            <Box sx={{ display: "flex", flexWrap: "wrap", marginTop: 2 }}>
               <Typography
                 sx={{
                   width: "25%",

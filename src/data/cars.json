@@ -10,8 +10,10 @@
     "rating": 5,
     "reviews": 440,
     "description": "A reliable, compact sedan that is perfect for city driving and short trips.",
+    "title": "Urban Compact",
+    "subTitle": "Economical & Easy to Drive",
     "images": [
-      "/images/yaris1.jpg",
+      "/images/yaris1.png",
       "/images/yaris2.jpg",
       "/images/yaris3.jpg"
     ]
@@ -27,8 +29,10 @@
     "rating": 5,
     "reviews": 1200,
     "description": "An iconic American muscle car offering thrilling performance and head-turning style.",
+    "title": "American Classic",
+    "subTitle": "Muscle & Style",
     "images": [
-      "/images/mustang1.jpg",
+      "/images/mustang1.png",
       "/images/mustang2.jpg",
       "/images/mustang3.jpg"
     ]
@@ -44,8 +48,10 @@
     "rating": 4,
     "reviews": 350,
     "description": "A small, efficient hatchback that is budget-friendly and easy to maneuver in urban areas.",
+    "title": "City Comfort",
+    "subTitle": "Compact & Efficient",
     "images": [
-      "/images/i101.jpg",
+      "/images/i101.png",
       "/images/i102.jpg",
       "/images/i103.jpg"
     ]
@@ -61,8 +67,10 @@
     "rating": 5,
     "reviews": 920,
     "description": "A luxurious, high-performance SUV that combines comfort, power, and advanced technology.",
+    "title": "Luxury SUV",
+    "subTitle": "Power & Sophistication",
     "images": [
-      "/images/x51.jpg",
+      "/images/x51.png",
       "/images/x52.jpg",
       "/images/x53.jpg"
     ]
@@ -78,8 +86,10 @@
     "rating": 4,
     "reviews": 210,
     "description": "A spacious and versatile van suitable for large groups or transporting bulky cargo.",
+    "title": "Spacious Van",
+    "subTitle": "For Groups & Cargo",
     "images": [
-      "/images/sprinter1.jpg",
+      "/images/sprinter1.png",
       "/images/sprinter2.jpg",
       "/images/sprinter3.jpg"
     ]
@@ -95,8 +105,10 @@
     "rating": 4,
     "reviews": 570,
     "description": "A stylish sedan offering a smooth ride, responsive handling, and great fuel efficiency.",
+    "title": "Smart Sedan",
+    "subTitle": "Smooth & Economical",
     "images": [
-      "/images/mazda1.jpg",
+      "/images/mazda1.png",
       "/images/mazda2.jpg",
       "/images/mazda3.jpg"
     ]
